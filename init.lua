@@ -98,8 +98,8 @@ vim.g.have_nerd_font = false
 --  For more options, you can see `:help option-list`
 
 -- Number of spaces for indentation, isn't part of the kickstart file
--- vim.opt.softtabstop = 4
--- vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
 vim.opt.cindent = true
 
