@@ -148,7 +148,7 @@ local config = {
   -- See https://github.com/mfussenegger/nvim-jdtls#java-debug-installation
   --
   -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
-  inti_options = {
+  init_options = {
     bundles = bundles,
   },
 }
@@ -186,41 +186,62 @@ end
 local opts = {
   mode = 'n', -- NORMAL mode
   prefix = '<leader>',
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
+  buffer = nil,
+  silent = true,
+  noremap = true,
+  nowait = true,
 }
 
 local vopts = {
   mode = 'v', -- VISUAL mode
   prefix = '<leader>',
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
+  buffer = nil,
+  silent = true,
+  noremap = true,
+  nowait = true,
 }
 
+-- Normal mode mappings
 local mappings = {
-  C = {
-    name = 'Java',
-    o = { "<Cmd>lua require'jdtls'.organize_imports()<CR>", 'Organize Imports' },
-    v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", 'Extract Variable' },
-    c = { "<Cmd>lua require('jdtls').extract_constant()<CR>", 'Extract Constant' },
-    t = { "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", 'Test Method' },
-    T = { "<Cmd>lua require'jdtls'.test_class()<CR>", 'Test Class' },
-    u = { '<Cmd>JdtUpdateConfig<CR>', 'Update Config' },
-  },
+  { '<leader>C', group = 'Java', nowait = true, remap = false },
+  { '<leader>CT', "<Cmd>lua require'jdtls'.test_class()<CR>", desc = 'Test Class', nowait = true, remap = false },
+  { '<leader>Cc', "<Cmd>lua require('jdtls').extract_constant()<CR>", desc = 'Extract Constant', nowait = true, remap = false },
+  { '<leader>Co', "<Cmd>lua require'jdtls'.organize_imports()<CR>", desc = 'Organize Imports', nowait = true, remap = false },
+  { '<leader>Ct', "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", desc = 'Test Method', nowait = true, remap = false },
+  { '<leader>Cu', '<Cmd>JdtUpdateConfig<CR>', desc = 'Update Config', nowait = true, remap = false },
+  { '<leader>Cv', "<Cmd>lua require('jdtls').extract_variable()<CR>", desc = 'Extract Variable', nowait = true, remap = false },
 }
 
+-- local mappings = {
+--   C = {
+--     name = 'Java', -- this sets the group name shown in which-key
+--     T = { "<Cmd>lua require'jdtls'.test_class()<CR>", 'Test Class' },
+--     c = { "<Cmd>lua require('jdtls').extract_constant()<CR>", 'Extract Constant' },
+--     o = { "<Cmd>lua require'jdtls'.organize_imports()<CR>", 'Organize Imports' },
+--     t = { "<Cmd>lua require'jdtls'.test_nearest_method()<CR>", 'Test Method' },
+--     u = { '<Cmd>JdtUpdateConfig<CR>', 'Update Config' },
+--     v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", 'Extract Variable' },
+--   },
+-- }
+
+-- Visual mode mappings
 local vmappings = {
-  C = {
-    name = 'Java',
-    v = { "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", 'Extract Variable' },
-    c = { "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", 'Extract Constant' },
-    m = { "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", 'Extract Method' },
-  },
+  mode = { 'v' },
+  { '<leader>C', group = 'Java', nowait = true, remap = false },
+  { '<leader>Cc', "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", desc = 'Extract Constant', nowait = true, remap = false },
+  { '<leader>Cm', "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", desc = 'Extract Method', nowait = true, remap = false },
+  { '<leader>Cv', "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", desc = 'Extract Variable', nowait = true, remap = false },
 }
 
-which_key.register(mappings, opts)
-which_key.register(vmappings, vopts)
+-- local vmappings = {
+--   C = {
+--     name = 'Java',
+--     c = { "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", 'Extract Constant' },
+--     m = { "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", 'Extract Method' },
+--     v = { "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", 'Extract Variable' },
+--   },
+-- }
+--
+
+which_key.add(mappings, opts)
+which_key.add(vmappings, vopts)

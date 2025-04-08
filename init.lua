@@ -468,7 +468,7 @@ require('lazy').setup({
   },
 
   -- LSP Plugins
-  { 'mfussenegger/nvim-jdtls' },
+  { 'mfussenegger/nvim-jdtls', ft = 'java' },
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
@@ -725,6 +725,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- used to format lua code
+        -- 'google-java-format', -- used to format java code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -779,7 +780,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         java = { 'google-java-format' },
         -- conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
