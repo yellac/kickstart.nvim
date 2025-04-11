@@ -153,15 +153,6 @@ local config = {
   },
 }
 
-config['on_attach'] = function()
-  local _, _ = pcall(vim.lsp.codelens.refresh)
-  require('jdtls').setup_dap { hotcodereplace = 'auto', config_overrides = {} }
-  local status_ok, jdtls_dap = pcall(require, 'jdtls.dap')
-  if status_ok then
-    jdtls_dap.setup_dap_main_class_configs()
-  end
-end
-
 vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
   pattern = { '*.java' },
   callback = function()
@@ -177,6 +168,15 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
 require('jdtls').start_or_attach(config)
+
+config['on_attach'] = function(client, bufnr)
+  local _, _ = pcall(vim.lsp.codelens.refresh)
+  require('jdtls').setup_dap { hotcodereplace = 'auto', config_overrides = {} }
+  local status_ok, jdtls_dap = pcall(require, 'jdtls.dap')
+  if status_ok then
+    jdtls_dap.setup_dap_main_class_configs()
+  end
+end
 
 local status_ok, which_key = pcall(require, 'which-key')
 if not status_ok then
